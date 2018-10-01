@@ -2,8 +2,11 @@ package com.zjs.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import javafx.print.Collation;
 
 /**
  * 以图书的ISBN为主键定义一本书的集合 主要抽象属性有isbn、类别、作者、出版社、出版时间、价格等
@@ -31,10 +34,12 @@ public class Bookinfo implements Serializable {
 	public Bookinfo() {
 		super();
 	}
-/**
- * 向图书中增加一本书book
- * @param book
- */
+
+	/**
+	 * 向图书中增加一本书book
+	 * 
+	 * @param book
+	 */
 	public void addBook(Book book) {
 		if (null == bookList) {
 			bookList = new ArrayList<Book>();
@@ -53,20 +58,53 @@ public class Bookinfo implements Serializable {
 
 	/**
 	 * 向图书bookInfo增加count本书，通过book的默认构造新增
+	 * 
 	 * @param isbn
 	 * @param count
 	 */
-	public void addBooks(Bookinfo bookInfo,int count) {
-	for (int i = 0; i < count; i++) {
+	public void addBooks(Bookinfo bookInfo, int count) {
+		for (int i = 0; i < count; i++) {
 			Book book = new Book(bookInfo.getIsbn());
 			addBook(book);
 		}
-	
+
 	}
-	
-	
-	
-	
+
+	/**
+	 * 向图书中删除一本书book
+	 * 
+	 * @param book
+	 */
+	public void deleteBook(Book book) {
+		if (null == bookList) {
+			bookList = new ArrayList<Book>();
+		}
+		if (null == book)
+			return;
+		if (!isbn.equals(book.getIsbn()))
+			return;
+		// 如果同一本书不需要添加
+		if (bookList.contains(book)) {
+			bookList.remove(book);
+			inStoreCount--;
+		}
+	}
+
+	/**
+	 * 向图书bookInfo删除count本书，通过随机取出的方式
+	 * 
+	 * @param isbn
+	 * @param count
+	 */
+	public void deleteBooks(Bookinfo bookInfo, int count) {
+		for (int i = 0; i < count; i++) {
+			List<Book> inBookList = bookInfo.getBookList();
+			int index = (int) (Math.random() * inBookList.size());
+			deleteBook(inBookList.get(index));
+		}
+
+	}
+
 	public String getIsbn() {
 		return isbn;
 	}
@@ -130,9 +168,11 @@ public class Bookinfo implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public List<Book> getBookList() {
 		return bookList;
 	}
+
 	public void setBookList(List<Book> bookList) {
 		this.bookList = bookList;
 	}

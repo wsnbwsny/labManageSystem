@@ -1,12 +1,10 @@
 package com.zjs.test;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zjs.auth.Role;
 import com.zjs.biz.BookInfoBiz;
 import com.zjs.biz.impl.BookInfoBizImpl;
 import com.zjs.entity.Book;
@@ -23,8 +21,27 @@ public class Test {
 
 		// FileClassTest();
 		// BookTest();
-		BookInfoTest();
+		 //BookInfoTest();
+		TestRole();
 
+	}
+
+	private static void TestRole() {
+		Role role1 = new Role();
+		System.out.println(role1.getName() + "\t" + role1.getKey());
+		System.out.println("权限集合：" + role1.getPermisstions());
+
+		Role role2 = new Role("超级操作员", "oparator");
+		System.out.println(role2.getName() + "\t" + role2.getKey());
+		System.out.println("权限集合：" + role2.getPermisstions());
+		
+		Role role3 = new Role("超级管理员", "administrators");
+		System.out.println(role2.getName() + "\t" + role3.getKey());
+		System.out.println("权限集合：" + role3.getPermisstions());
+		
+		role3.inStore("123-456", 4);
+		System.out.println(role3.outStore("123-456", 3));
+		ShowAllBookInfo(Fileutil.ReadBookInfoMap());
 	}
 
 	public static void BookInfoTest() {
@@ -83,7 +100,8 @@ public class Test {
 			List<Book> bookList = bookInfoMap.get(isbn).getBookList();
 			System.out.println("该图书的总本书：\t" + bookList.size());
 			for (int i = 0; i < bookList.size(); i++) {
-				System.out.println("第"+(i+1)+"本书："+bookList.get(i).getBookId() + ":" + bookList.get(i).getState());
+				System.out.println(
+						"第" + (i + 1) + "本书：" + bookList.get(i).getBookId() + ":" + bookList.get(i).getState());
 
 			}
 

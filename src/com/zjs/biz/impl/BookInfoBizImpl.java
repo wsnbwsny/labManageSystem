@@ -82,7 +82,8 @@ public class BookInfoBizImpl implements BookInfoBiz {
 			return false;
 
 		}
-		bookinfo.setInStoreCount(bookinfo.getInStoreCount() - outCount);
+		// bookinfo.setInStoreCount(bookinfo.getInStoreCount() - outCount);
+		bookinfo.deleteBooks(bookinfo, outCount);
 		Map<String, Bookinfo> bookInfoMap = findAll();
 		bookInfoMap.put(isbn, bookinfo);
 		Fileutil.SaveBookInfoMap(bookInfoMap);

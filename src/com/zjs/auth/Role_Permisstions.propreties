@@ -1,4 +1,4 @@
 #key = value
 administrators=bookinfobiz.*,userbiz.*
 oparator=userbiz.*
-default=bookinfobiz.*,userbiz.*
+default=userbiz.*
